@@ -179,6 +179,7 @@ void setup() {
   while (startTime == tempEpoch) {
     startTime = Get_Epoch_Time();
   }
+  
   startMil = millis();
   i2s_config_t i2s_config = {
       .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_RX),
@@ -222,6 +223,7 @@ void debugStatement(String officalStart, String officalEnd) {
 }
 
 void loop() {
+  collectData();
   if (finishCollection) {
     Serial.println("-----------------------------------");
     int delayTime = 1000;
