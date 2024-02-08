@@ -7,7 +7,7 @@
 #include <driver/i2s.h>
 
 char* EAP_IDENTITY = "user";
-char* EAP_PASSWORD = "pwd";
+char* EAP_PASSWORD = "pass";
 
 char* STAusername;
 char* STApassword;
@@ -58,7 +58,7 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 
 const char* mqtt_broker = "3.12.159.20";
-const char* topic = "testdb";
+const char* topic = "shake";
 const int mqtt_port = 1883;
 
 unsigned long Get_Epoch_Time() {
@@ -228,8 +228,8 @@ void loop() {
     Serial.println("-----------------------------------");
     int delayTime = 1000;
     debugStatement(officalStart, officalEnd);
-    sendMQTT(createOutMQTT("testdb", "audio", "audiovalue", rowData.audioArray, macAddress, officalStart, samplePeriord));
+    sendMQTT(createOutMQTT("shake", "audio", "audiovalue", rowData.audioArray, macAddress, officalStart, samplePeriord));
     finishCollection = false;
   }
-  delay(100); // Adjust the delay based on your requirements
+  // delay(100); // Adjust the delay based on your requirements
 }
