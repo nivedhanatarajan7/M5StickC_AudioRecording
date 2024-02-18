@@ -71,9 +71,9 @@ unsigned long Get_Epoch_Time() {
   return now;
 }
 
-String epochString() {
+String epochString(int displace) {
   double syncMil = millis() - startMil;
-  syncMil = syncMil / 1000;
+  syncMil = syncMil / 1000 + displace;
   outTime = startTime + syncMil;
   numString = String(outTime, 3);
   return numString;
@@ -125,7 +125,7 @@ void collectData() {
   audioRead();
   if (count <= numDataPoints - 1) {
     if (count == 0) {
-      packetStartEpoch = epochString() - 10;
+      packetStartEpoch = epochString(-10);
     }
     rowData.audioArray[count] = dataArray[count];
     delay(samplePeriord);
@@ -134,8 +134,8 @@ void collectData() {
     rowData.audioArray[count] = dataArray[count];
     count++;
   } else { // The last index of the array
-    packetStopEpoch = epochString();
-    officalEnd = packetStopEpoch + 1;
+    packetStopEpoch = epochString(1);
+    officalEnd = packetStopEpoch;
     officalStart = packetStartEpoch;
     count = 0;
     finishCollection = true;
