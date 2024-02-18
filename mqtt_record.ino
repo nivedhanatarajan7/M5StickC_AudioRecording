@@ -48,7 +48,7 @@ int numOfUnits;
 int count;
 bool finishCollection = false;
 
-int samplePeriord = 10; // 10 ms == 100hz
+int samplePeriord = 1; // 10 ms == 100hz
 
 String numString;
 String packetStartEpoch;
@@ -125,7 +125,7 @@ void collectData() {
   audioRead();
   if (count <= numDataPoints - 1) {
     if (count == 0) {
-      packetStartEpoch = epochString();
+      packetStartEpoch = epochString() - 10;
     }
     rowData.audioArray[count] = dataArray[count];
     delay(samplePeriord);
@@ -135,7 +135,7 @@ void collectData() {
     count++;
   } else { // The last index of the array
     packetStopEpoch = epochString();
-    officalEnd = packetStopEpoch;
+    officalEnd = packetStopEpoch + 1;
     officalStart = packetStartEpoch;
     count = 0;
     finishCollection = true;
@@ -183,7 +183,7 @@ void setup() {
   startMil = millis();
   i2s_config_t i2s_config = {
       .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_RX),
-      .sample_rate = 100,
+      .sample_rate = 44100,
       .bits_per_sample = I2S_BITS_PER_SAMPLE_16BIT,
       .channel_format = I2S_CHANNEL_FMT_ONLY_LEFT,
       .communication_format = I2S_COMM_FORMAT_I2S_MSB,
